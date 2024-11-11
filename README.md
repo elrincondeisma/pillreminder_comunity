@@ -3,7 +3,7 @@
 Lista de tareas para el proyecto
 ### Todo
 
-- [ ] Logo Pill Reminder  
+- [x] Logo Pill Reminder  
 - [ ] Filament Resource Treatments  
 - [ ] Filament Resource Events
 - [ ] Multitenancy

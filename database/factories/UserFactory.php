@@ -41,4 +41,11 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+    public function admin() : static{
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Administrador Local',
+            'email' => 'adminlocal@demo.com',
+            'password' => Hash::make('password'),
+        ]);
+    }
 }
