@@ -24,6 +24,7 @@ use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use MarcoGermani87\FilamentCookieConsent\FilamentCookieConsent;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Filament\Navigation\NavigationGroup;
+use Illuminate\Support\Facades\Auth;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -68,12 +69,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
-                    ->label(fn() => auth()->user()->name)
+                    ->label(fn() => Auth::user()->name)
                     ->url(fn (): string => EditProfilePage::getUrl())
-                    ->icon('heroicon-m-user-circle')
-
-                    //If you are using tenancy need to check with the visible method where ->company() is the relation between the user and tenancy model as you called
-                    ,
+                    ->icon('heroicon-m-user-circle'),
             ])
             ->middleware([
                 EncryptCookies::class,

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class Treatment extends Model
 {
@@ -42,5 +43,16 @@ class Treatment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function getEnumValues(string $column): array
+    {
+        $enums = [
+            'vial_type' => ['oral', 'injection', 'other'],
+            'location' => ['arms', 'legs', 'chest', 'abdomen', 'other'],
+            'first_route' => ['left', 'right', 'indifferent'],
+        ];
+
+        return $enums[$column] ?? [];
     }
 }

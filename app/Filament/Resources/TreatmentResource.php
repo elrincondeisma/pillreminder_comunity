@@ -41,15 +41,37 @@ class TreatmentResource extends Resource
                     ->required(),
                 Forms\Components\DateTimePicker::make('end_date')
                     ->required(),
-                Forms\Components\TextInput::make('vial_type')
+                Forms\Components\Select::make('vial_type')
+                    ->options(array_combine(
+                        \App\Models\Treatment::getEnumValues('vial_type'),
+                        \App\Models\Treatment::getEnumValues('vial_type')
+                    ))
+                    ->live()
                     ->required(),
-                Forms\Components\TextInput::make('custom_vial_type'),
-                Forms\Components\TextInput::make('location')
-                    ->required(),
-                Forms\Components\TextInput::make('custom_location'),
+                Forms\Components\TextInput::make('custom_vial_type')
+                    ->nullable()
+                    ->visible(fn ($get) => $get('vial_type') === 'other') 
+                    ->options(array_combine(
+                        \App\Models\Treatment::getEnumValues('location'),
+                        \App\Models\Treatment::getEnumValues('location')
+                    ))
+                    ->visible(fn ($get) => $get('vial_type') === 'injection')
+                    ->live()
+                    ->nullable(),
+                Forms\Components\TextInput::make('custom_location')
+                    ->nullable()
+                    ->visible(fn ($get) => $get('location') === 'other'), 
                 Forms\Components\Toggle::make('alternate_route')
-                    ->required(),
-                Forms\Components\TextInput::make('first_route'),
+                    ->required()
+                    ->default(false)
+                    ->live(),
+                Forms\Components\Select::make('first_route')
+                    ->options(array_combine(
+                        \App\Models\Treatment::getEnumValues('first_route'),
+                        \App\Models\Treatment::getEnumValues('first_route')
+                    ))
+                    ->visible(fn ($get) => $get('alternate_route') === true)
+                    ->nullable(),
                 Forms\Components\Toggle::make('notify_feedback')
                     ->required(),
                 Forms\Components\Toggle::make('notify_pain')
